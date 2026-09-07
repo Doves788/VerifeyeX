@@ -66,11 +66,15 @@ async def create_cashfree_order(order: OrderRequest):
     
     try:
         response = requests.post(url, json=payload, headers=headers)
-        data = response.json()
-        if "payment_session_id" in data:
-            return {"status": "success", "payment_session_id": data["payment_session_id"]}
-        else:
-            return {"status": "error", "message": data.get("message", "Failed to create order")}
+        try:
+            data = response.json()
+            if "payment_session_id" in data:
+                return {"status": "success", "payment_session_id": data["payment_session_id"]}
+            else:
+                return {"status": "error", "message": data.get("message", "Failed to create order")}
+        except ValueError:
+            # If Cashfree returns HTML (like a 503 error) instead of JSON
+            return {"status": "error", "message": f"Cashfree API Error (HTTP {response.status_code}): {response.text[:200]}"}
     except Exception as e:
         return {"status": "error", "message": str(e)}
 

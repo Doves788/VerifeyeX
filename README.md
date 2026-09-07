@@ -64,7 +64,7 @@ node server.js
 
 ---
 
-## � Environment Variables
+## 🔑 Environment Variables
 You must configure the `.env` files in both the frontend and backend to enable external integrations:
 - **Frontend**: Requires `VITE_CLERK_PUBLISHABLE_KEY` (Clerk Auth).
 - **Backend**: Requires `CASHFREE_APP_ID` and `CASHFREE_SECRET_KEY` (SaaS Billing).

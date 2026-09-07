@@ -66,7 +66,7 @@ function PaymentModal({ onClose, onRecharge }) {
           }
         });
       } else {
-        alert("Server Error: Cashfree keys are likely missing from backend.");
+        alert("Payment Error: " + (data.message || "Unknown error occurred."));
       }
     } catch (err) {
       console.error(err);
