@@ -5,6 +5,19 @@ VerifeyeX is an enterprise-grade SaaS platform designed to detect audio deepfake
 
 ---
 
+## 📸 Platform Gallery
+
+<div align="center">
+  <img src="assets/screenshots/home.png" alt="Home Page" width="49%">
+  <img src="assets/screenshots/enrollment.png" alt="Voice Biometric Enrollment" width="49%">
+</div>
+<div align="center">
+  <img src="assets/screenshots/pricing.png" alt="SaaS Pricing Plans" width="49%">
+  <img src="assets/screenshots/checkout.png" alt="Cashfree Secure Checkout" width="49%">
+</div>
+
+---
+
 ## ✨ Key Features
 
 - **🎙️ Real-Time Biometric Enrollment**: Extract Mel-Frequency Cepstral Coefficients (MFCCs) from user voice samples to generate highly accurate acoustic identity embeddings.
