@@ -85,5 +85,4 @@ You must configure the `.env` files in both the frontend and backend to enable e
 *See `.env.example` in the respective folders for exact formatting.*
 
 ---
-*Developed as a capstone engineering project for B.Tech Placements.*
 
