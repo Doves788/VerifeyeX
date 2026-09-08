@@ -33,3 +33,4 @@ except Exception as e:
 
 ## Takeaway
 By recognizing that the AI's initial generic error handler was masking external API failures, I was able to direct it to implement robust, multi-layered `try-except` blocks. This ensures the frontend receives actionable error states rather than raw Python tracebacks, proving production-readiness.
+
