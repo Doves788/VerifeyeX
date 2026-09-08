@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import RecordRTC, { StereoAudioRecorder } from 'recordrtc';
 import '../App.css';
 
-const SOCKET_URL = 'http://localhost:3001';
+const SOCKET_URL = import.meta.env.VITE_RELAY_URL || 'http://localhost:3001';
 
 function Scanner({ onDeduct }) {
   const [isRecording, setIsRecording] = useState(false);

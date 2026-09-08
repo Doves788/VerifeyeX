@@ -31,7 +31,8 @@ function PaymentModal({ onClose, onRecharge }) {
     
     // 1. Ask Python Backend to create an order
     try {
-      const response = await fetch('http://localhost:8000/create-order', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${API_URL}/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
