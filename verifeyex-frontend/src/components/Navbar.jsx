@@ -1,6 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Shield, Activity, Cpu, UserCheck, Zap, Coins } from 'lucide-react';
-import { UserButton } from '@clerk/clerk-react';
 import { UserButton, SignedIn, SignedOut, SignInButton } from '@clerk/clerk-react';
 import './Navbar.css';
 
