@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ShieldAlert, Fingerprint, Network } from 'lucide-react';
+import { SignedIn, SignedOut, SignInButton } from '@clerk/clerk-react';
 import './Home.css';
 
 function Home() {
@@ -12,8 +13,15 @@ function Home() {
           Voice cloning fraud is costing enterprises billions. Defend your organization with VerifeyeX—an autonomous AI swarm that analyzes acoustic fingerprints in real-time to detect synthetic voice threats before they breach your security.
         </p>
         <div className="hero-actions">
-          <Link to="/scanner" className="btn-primary-large">Try Live Demo</Link>
-          <Link to="/technology" className="btn-secondary-large">Read Whitepaper</Link>
+          <SignedIn>
+            <Link to="/scanner" className="btn-primary-large">Access Live Platform</Link>
+          </SignedIn>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="btn-primary-large" style={{ border: 'none', cursor: 'pointer' }}>Sign in to Access Platform</button>
+            </SignInButton>
+          </SignedOut>
+          <Link to="/technology" className="btn-secondary-large">Read Architecture</Link>
         </div>
       </header>
 

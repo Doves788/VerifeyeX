@@ -17,18 +17,15 @@ function Navbar({ onUpgradeClick, balance }) {
         <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
           <Shield size={18} /> Overview
         </Link>
+        <Link to="/enroll" className={`nav-link ${location.pathname === '/enroll' ? 'active' : ''}`}>
+          <UserCheck size={18} /> Enroll Voice
+        </Link>
+        <Link to="/scanner" className={`nav-link ${location.pathname === '/scanner' ? 'active' : ''}`}>
+          <Activity size={18} /> Live Scanner
+        </Link>
         <Link to="/technology" className={`nav-link ${location.pathname === '/technology' ? 'active' : ''}`}>
           <Cpu size={18} /> Technology
         </Link>
-        
-        <SignedIn>
-          <Link to="/enroll" className={`nav-link ${location.pathname === '/enroll' ? 'active' : ''}`}>
-            <UserCheck size={18} /> Enroll Voice
-          </Link>
-          <Link to="/scanner" className={`nav-link ${location.pathname === '/scanner' ? 'active' : ''}`}>
-            <Activity size={18} /> Live Scanner
-          </Link>
-        </SignedIn>
       </div>
       <div className="nav-actions">
         <div className="balance-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(255,255,255,0.05)', padding: '0.4rem 0.8rem', borderRadius: '8px', color: '#e2e8f0', fontSize: '0.9rem', fontWeight: '500', border: '1px solid rgba(255,255,255,0.1)' }}>
