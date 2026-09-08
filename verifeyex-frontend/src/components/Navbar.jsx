@@ -17,12 +17,6 @@ function Navbar({ onUpgradeClick, balance }) {
         <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
           <Shield size={18} /> Overview
         </Link>
-        <Link to="/enroll" className={`nav-link ${location.pathname === '/enroll' ? 'active' : ''}`}>
-          <UserCheck size={18} /> Enroll Voice
-        </Link>
-        <Link to="/scanner" className={`nav-link ${location.pathname === '/scanner' ? 'active' : ''}`}>
-          <Activity size={18} /> Live Scanner
-        </Link>
         <Link to="/technology" className={`nav-link ${location.pathname === '/technology' ? 'active' : ''}`}>
           <Cpu size={18} /> Technology
         </Link>

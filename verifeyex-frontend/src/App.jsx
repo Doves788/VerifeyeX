@@ -75,10 +75,7 @@ function AppContent() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
-          <Route path="/enroll" element={<Enrollment />} />
-          <Route path="/scanner" element={<Scanner onDeduct={handleDeduct} />} />
           <Route path="/technology" element={<Technology />} />
-          <Route path="/profile" element={<Profile balance={balance} history={history} />} />
           
           {/* Protected Routes (Require Authentication) */}
           <Route path="/enroll" element={<ProtectedRoute><Enrollment /></ProtectedRoute>} />
