@@ -50,8 +50,11 @@
   }
 }
 
+/* Core CSS variables are managed in App.css */
 body {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 #root {
@@ -61,6 +64,8 @@ body {
   text-align: center;
   border-inline: 1px solid var(--border);
   min-height: 100svh;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -71,6 +76,8 @@ h2 {
   font-family: var(--heading);
   font-weight: 500;
   color: var(--text-h);
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
 h1 {

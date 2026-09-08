@@ -420,3 +420,7 @@ footer {
   border-top: 1px solid var(--panel-border);
   background: rgba(0,0,0,0.2);
 }
+
+/* Global Heading Symmetry */
+h1, h2, h3 { text-align: center; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; color: var(--text-main); }
+
