@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ClerkProvider, SignedIn, SignedOut, SignIn } from '@clerk/clerk-react';
+import { ClerkProvider, SignedIn, SignedOut, SignIn, RedirectToSignIn } from '@clerk/clerk-react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Scanner from './pages/Scanner';
@@ -11,6 +11,19 @@ import PaymentModal from './components/PaymentModal';
 import './App.css';
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+const ProtectedRoute = ({ children }) => {
+  return (
+    <>
+      <SignedIn>
+        {children}
+      </SignedIn>
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
+    </>
+  );
+};
 
 function AppContent() {
   const [showPayment, setShowPayment] = useState(false);
@@ -60,11 +73,14 @@ function AppContent() {
         )}
 
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Home />} />
-          <Route path="/enroll" element={<Enrollment />} />
-          <Route path="/scanner" element={<Scanner onDeduct={handleDeduct} />} />
           <Route path="/technology" element={<Technology />} />
-          <Route path="/profile" element={<Profile balance={balance} history={history} />} />
+          
+          {/* Protected Routes (Require Authentication) */}
+          <Route path="/enroll" element={<ProtectedRoute><Enrollment /></ProtectedRoute>} />
+          <Route path="/scanner" element={<ProtectedRoute><Scanner onDeduct={handleDeduct} /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile balance={balance} history={history} /></ProtectedRoute>} />
         </Routes>
         <footer>
           <p>VerifeyeX Security Systems &copy; {new Date().getFullYear()} | Autonomous Voice Threat Intelligence</p>
@@ -97,14 +113,7 @@ function App() {
 
   return (
     <ClerkProvider publishableKey={clerkPubKey}>
-      <SignedIn>
-        <AppContent />
-      </SignedIn>
-      <SignedOut>
-        <div className="auth-overlay fade-in" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100vw' }}>
-          <SignIn />
-        </div>
-      </SignedOut>
+      <AppContent />
     </ClerkProvider>
   );
 }
