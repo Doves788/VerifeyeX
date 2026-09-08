@@ -422,5 +422,5 @@ footer {
 }
 
 /* Global Heading Symmetry */
-h1, h2, h3 { text-align: center; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; color: var(--text-main); }
+h1, h2, h3 { text-align: center; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; color: var(--text-main); line-height: 1.2; }
 
