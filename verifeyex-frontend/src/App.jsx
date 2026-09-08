@@ -75,7 +75,10 @@ function AppContent() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/enroll" element={<Enrollment />} />
+          <Route path="/scanner" element={<Scanner onDeduct={handleDeduct} />} />
           <Route path="/technology" element={<Technology />} />
+          <Route path="/profile" element={<Profile balance={balance} history={history} />} />
           
           {/* Protected Routes (Require Authentication) */}
           <Route path="/enroll" element={<ProtectedRoute><Enrollment /></ProtectedRoute>} />
@@ -113,6 +116,14 @@ function App() {
 
   return (
     <ClerkProvider publishableKey={clerkPubKey}>
+      <SignedIn>
+        <AppContent />
+      </SignedIn>
+      <SignedOut>
+        <div className="auth-overlay fade-in" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100vw' }}>
+          <SignIn />
+        </div>
+      </SignedOut>
       <AppContent />
     </ClerkProvider>
   );
