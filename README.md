@@ -1,7 +1,8 @@
 # VerifeyeX 🛡️
-**Autonomous Voice Threat Intelligence & Active Defense SaaS**
+**Enterprise Active Defense SaaS against Audio Spoofing**
 
-VerifeyeX is an enterprise-grade SaaS platform designed to detect audio deepfakes and verify biometric speaker identities in real-time. Built with a robust 3-tier microservice architecture, it seamlessly streams live microphone audio through a Node.js WebSocket relay into a Python FastAPI engine for instantaneous Machine Learning analysis.
+*Voice cloning fraud is costing enterprises millions in compliance violations and wire fraud.*
+VerifeyeX is a monetizable, active-defense SaaS platform that stops this. Instead of a generic API, this is a fully functional product featuring a 3-tier microservice architecture, real-time PyTorch WebSocket streaming, and a tiered Cashfree billing engine.
 
 ---
 

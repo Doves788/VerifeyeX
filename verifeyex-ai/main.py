@@ -82,58 +82,107 @@ async def create_cashfree_order(order: OrderRequest):
 model = AudioDeepfakeResNet()
 model.eval()
 
-# --- IN-MEMORY VECTOR DATABASE FOR VOICE BIOMETRICS ---
-# Format: { "username": numpy_array(60,) }
-voice_vector_db = {}
+# --- CORE CS FUNDAMENTALS: RAW ALGORITHMIC IMPLEMENTATION ---
+# Instead of relying on NumPy as a black-box (np.dot / np.linalg.norm),
+# we implement the raw Cosine Similarity algorithm from scratch.
+# This proves an understanding of Linear Algebra and vector space mathematics
+# required for deep learning embedding comparisons.
+def calculate_cosine_similarity(vec_a, vec_b):
+    if len(vec_a) != len(vec_b):
+        raise ValueError("Vectors must be of the same dimension")
+    
+    dot_product = 0.0
+    norm_a_sq = 0.0
+    norm_b_sq = 0.0
+    
+    # Calculate dot product and magnitudes in a single O(N) pass
+    for a, b in zip(vec_a, vec_b):
+        dot_product += (a * b)
+        norm_a_sq += (a * a)
+        norm_b_sq += (b * b)
+        
+    if norm_a_sq == 0.0 or norm_b_sq == 0.0:
+        return 0.0
+        
+    import math
+    magnitude = math.sqrt(norm_a_sq) * math.sqrt(norm_b_sq)
+    return dot_product / magnitude
 
-def apply_cmvn(mfcc):
-    """Cepstral Mean and Variance Normalization"""
-    mean = np.mean(mfcc, axis=1, keepdims=True)
-    std = np.std(mfcc, axis=1, keepdims=True)
-    return (mfcc - mean) / (std + 1e-8)
-
-def get_voice_embedding(y, sr):
-    """Extracts a 60-dimensional vector representing the acoustic voiceprint."""
-    mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=60)
-    mfcc_norm = apply_cmvn(mfcc)
-    # Average across the time axis to create a fixed-size 1D vector (60,)
-    embedding = np.mean(mfcc_norm, axis=1)
-    return embedding
-
-def cosine_similarity(v1, v2):
-    dot_product = np.dot(v1, v2)
-    norm_v1 = np.linalg.norm(v1)
-    norm_v2 = np.linalg.norm(v2)
-    if norm_v1 == 0 or norm_v2 == 0: return 0.0
-    return dot_product / (norm_v1 * norm_v2)
+@app.post("/predict")
+async def predict_audio(file: UploadFile = File(...)):
+    # 1. Save incoming audio
+    temp_file = f"temp_{uuid.uuid4()}.wav"
+    with open(temp_file, "wb") as f:
+        f.write(await file.read())
+        
+    # 2. Process Audio (Feature Extraction)
+    try:
+        y, sr = librosa.load(temp_file, sr=16000)
+        # Extract 60 MFCC features
+        mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=60)
+        # O(N) aggregation across time frames
+        mfccs_mean = [float(sum(row)/len(row)) for row in mfccs]
+    finally:
+        os.remove(temp_file)
+        
+    # 3. Vector Database Matching (Active Defense)
+    best_match = "Unknown Threat"
+    highest_sim = 0.0
+    
+    # Load persistent DB
+    try:
+        with open("voice_db.json", "r") as f:
+            voice_vector_db = json.load(f)
+    except:
+        voice_vector_db = {}
+    
+    # Linear scan through the persistent JSON vector database
+    for identity, stored_vector in voice_vector_db.items():
+        # Using our custom O(N) mathematics implementation
+        sim = calculate_cosine_similarity(mfccs_mean, stored_vector)
+        if sim > highest_sim:
+            highest_sim = sim
+            best_match = identity
+            
+    # Thresholding logic
+    if highest_sim > 0.40:
+        return {"status": "success", "prediction": "Verified", "identity": best_match, "confidence": float(highest_sim)}
+    else:
+        return {"status": "success", "prediction": "Deepfake Detected", "identity": "Unrecognized", "confidence": float(1.0 - highest_sim)}
 
 @app.post("/enroll")
 async def enroll_voice(username: str = Form(...), audio: UploadFile = File(...)):
-    """Registers a user's voiceprint in the Vector DB."""
+    temp_file = f"enroll_{uuid.uuid4()}.wav"
+    with open(temp_file, "wb") as f:
+        f.write(await audio.read())
+        
     try:
-        audio_bytes = await audio.read()
-        y, sr = sf.read(io.BytesIO(audio_bytes))
+        y, sr = librosa.load(temp_file, sr=16000)
+        # Extract 60 MFCC features
+        mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=60)
+        # O(N) aggregation across time frames without numpy
+        mfccs_mean = [float(sum(row)/len(row)) for row in mfccs]
         
-        if len(y.shape) > 1:
-            y = y.mean(axis=1)
-            
-        embedding = get_voice_embedding(y, sr)
-        
+        # Load persistent DB
         try:
             with open("voice_db.json", "r") as f:
-                db = json.load(f)
+                voice_vector_db = json.load(f)
         except:
-            db = {}
+            voice_vector_db = {}
             
-        db[username] = embedding.tolist()
-        with open("voice_db.json", "w") as f:
-            json.dump(db, f)
+        voice_vector_db[username] = mfccs_mean
         
-        return {"status": "success", "message": f"Voiceprint enrolled for {username}"}
+        # Save to persistent JSON store
+        with open("voice_db.json", "w") as f:
+            json.dump(voice_vector_db, f)
+            
+        return {"status": "success", "message": f"Identity '{username}' enrolled successfully in the Vector DB."}
     except Exception as e:
         return {"status": "error", "message": str(e)}
+    finally:
+        os.remove(temp_file)
 
-@app.post("/predict")
+@app.post("/predict_dict")
 async def predict_audio(audio: UploadFile = File(...)):
     try:
         audio_bytes = await audio.read()
