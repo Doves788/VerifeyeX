@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import RecordRTC, { StereoAudioRecorder } from 'recordrtc';
 
@@ -275,7 +275,7 @@ function Scanner({ onDeduct }) {
                 {prediction ? (
                   prediction.is_silence ? (
                     <div className="flex items-start gap-4 p-4 rounded-lg bg-slate-800/50 border border-slate-700">
-                      <div className="text-2xl">ðŸ’¤</div>
+                      <div className="text-2xl">💤</div>
                       <div>
                         <div className="text-white font-bold text-lg mb-1">Silence Detected</div>
                         <div className="text-slate-400 text-sm">Skipping AI inference to save compute.</div>
@@ -284,7 +284,7 @@ function Scanner({ onDeduct }) {
                   ) : (
                     <div className={`flex items-start gap-4 p-4 rounded-lg border ${prediction.prediction === 'AI Deepfake' ? 'bg-red-500/10 border-red-500/30' : 'bg-emerald-500/10 border-emerald-500/30'}`}>
                       <div className="text-2xl mt-1">
-                        {prediction.prediction === 'AI Deepfake' ? 'ðŸš¨' : 'âœ…'}
+                        {prediction.prediction === 'AI Deepfake' ? '🚨' : '✅'}
                       </div>
                       <div>
                         <div className={`font-bold text-xl mb-1 ${prediction.prediction === 'AI Deepfake' ? 'text-red-400' : 'text-emerald-400'}`}>{prediction.prediction}</div>
@@ -293,11 +293,11 @@ function Scanner({ onDeduct }) {
                         )}
                         {prediction.identity && prediction.identity !== 'Unknown' ? (
                           <div className="text-emerald-400 font-bold text-sm bg-emerald-500/10 px-2 py-1 rounded inline-block">
-                            ðŸ‘¤ Verified Identity: {prediction.identity} ({(prediction.identity_confidence * 100).toFixed(0)}% Match)
+                            👤 Verified Identity: {prediction.identity} ({(prediction.identity_confidence * 100).toFixed(0)}% Match)
                           </div>
                         ) : prediction.prediction !== 'AI Deepfake' && (
                           <div className="text-slate-400 text-sm bg-slate-800 px-2 py-1 rounded inline-block">
-                            ðŸ‘¤ Identity: Unknown Caller
+                            👤 Identity: Unknown Caller
                           </div>
                         )}
                       </div>
@@ -329,7 +329,7 @@ function Scanner({ onDeduct }) {
               <div className="mt-8 bg-purple-900/10 border border-purple-500/30 rounded-lg overflow-hidden">
                 <div className="bg-purple-900/40 px-6 py-3 border-b border-purple-500/30 flex items-center justify-between">
                   <h3 className="text-purple-300 font-bold text-sm uppercase tracking-wider flex items-center gap-2">
-                    <span>âš¡</span> Autonomous Threat Investigation Swarm
+                    <span>⚡</span> Autonomous Threat Investigation Swarm
                   </h3>
                   <div className="text-xs text-purple-400 bg-purple-500/20 px-2 py-1 rounded-full animate-pulse border border-purple-500/50">Active</div>
                 </div>

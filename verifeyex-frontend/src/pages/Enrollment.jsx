@@ -1,4 +1,4 @@
-﻿import { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import RecordRTC, { StereoAudioRecorder } from 'recordrtc';
 import { Fingerprint, UserCheck, Loader } from 'lucide-react';
 
@@ -65,7 +65,7 @@ function Enrollment() {
     formData.append('audio', blob, 'enroll.wav');
     
     try {
-      const response = await fetch('`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/enroll`', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/enroll`, {
         method: 'POST',
         body: formData,
       });
