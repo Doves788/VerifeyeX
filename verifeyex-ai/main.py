@@ -17,6 +17,13 @@ import random
 from model import AudioDeepfakeResNet
 from pydantic import BaseModel
 
+def apply_cmvn(mfcc):
+    import numpy as np
+    mean = np.mean(mfcc, axis=1, keepdims=True)
+    std = np.std(mfcc, axis=1, keepdims=True)
+    std[std == 0] = 1e-8
+    return (mfcc - mean) / std
+
 app = FastAPI(title="VerifeyeX AI Backend")
 
 app.add_middleware(

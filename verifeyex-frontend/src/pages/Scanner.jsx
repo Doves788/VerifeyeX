@@ -274,7 +274,15 @@ function Scanner({ onDeduct, onRequestUpgrade }) {
               <div className="bg-slate-950/50 border border-slate-800 rounded-lg p-6">
                 <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Network Output</h3>
                 {prediction ? (
-                  prediction.is_silence ? (
+                  prediction.error ? (
+                    <div className="flex items-start gap-4 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+                      <div className="text-2xl mt-1">❌</div>
+                      <div>
+                        <div className="text-red-400 font-bold text-xl mb-1">Server Error</div>
+                        <div className="text-red-300/80 text-sm">{prediction.error}</div>
+                      </div>
+                    </div>
+                  ) : prediction.is_silence ? (
                     <div className="flex items-start gap-4 p-4 rounded-lg bg-slate-800/50 border border-slate-700">
                       <div className="text-2xl">💤</div>
                       <div>
