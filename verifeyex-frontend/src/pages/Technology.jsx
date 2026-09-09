@@ -6,13 +6,13 @@ function Technology() {
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold text-white tracking-tight">Platform Architecture</h1>
         <p className="text-lg text-slate-400">A deep dive into the Machine Learning and System Design powering VerifeyeX.</p>
-        <div className="h-1 w-16 bg-blue-600 mx-auto rounded-full mt-4"></div>
+        <div className="h-1 w-16 bg-amber-600 mx-auto rounded-full mt-4"></div>
       </div>
 
       <div className="space-y-8">
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-8 hover:border-slate-700 transition-all shadow-lg flex flex-col md:flex-row gap-6 items-start">
-          <div className="p-4 bg-blue-500/10 rounded-xl border border-blue-500/20 flex-shrink-0">
-            <Activity size={32} className="text-blue-400" />
+          <div className="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20 flex-shrink-0">
+            <Activity size={32} className="text-amber-400" />
           </div>
           <div>
             <h2 className="text-xl font-bold text-white mb-3">1. Deep Signal Processing (DSP)</h2>

@@ -20,7 +20,7 @@ function Navbar({ onUpgradeClick, balance }) {
           <div className="flex items-center">
             <Link to="/" className="flex items-center gap-2">
               <span className="text-xl font-bold text-white tracking-tight">
-                Verifeye<span className="text-blue-500">X</span>
+                Verifeye<span className="text-amber-500">X</span>
               </span>
             </Link>
           </div>
@@ -48,7 +48,7 @@ function Navbar({ onUpgradeClick, balance }) {
               </div>
               <button 
                 onClick={onUpgradeClick}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-blue-400 hover:text-white bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 rounded-md transition-colors"
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-amber-400 hover:text-white bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 rounded-md transition-colors"
               >
                 <Zap size={14} className="fill-current" /> Pro
               </button>
@@ -60,7 +60,7 @@ function Navbar({ onUpgradeClick, balance }) {
 
             <SignedOut>
               <SignInButton mode="modal">
-                <button className="px-5 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-500 rounded-md transition-all duration-200 active:scale-95 shadow-lg shadow-blue-500/20">
+                <button className="px-5 py-2 text-sm font-medium text-white bg-amber-600 hover:bg-amber-500 rounded-md transition-all duration-200 active:scale-95 shadow-lg shadow-amber-500/20">
                   Sign In
                 </button>
               </SignInButton>

@@ -92,7 +92,7 @@ function PaymentModal({ onClose, onRecharge }) {
         {step === 'plans' ? (
           <div className="space-y-8">
             <div className="text-center space-y-3">
-              <h2 className="text-3xl font-bold text-white tracking-tight">Select a <span className="text-blue-500">SaaS Plan</span></h2>
+              <h2 className="text-3xl font-bold text-white tracking-tight">Select a <span className="text-amber-500">SaaS Plan</span></h2>
               <p className="text-slate-400">Choose the level of defense you need for your platform.</p>
             </div>
 
@@ -102,30 +102,30 @@ function PaymentModal({ onClose, onRecharge }) {
                 className="bg-slate-950 border border-slate-800 rounded-xl p-6 text-center cursor-pointer hover:border-slate-600 hover:bg-slate-800/50 transition-all flex flex-col group"
                 onClick={() => handleSelectPlan({name: 'Initial', price: '$19'})}
               >
-                <div className="mx-auto w-12 h-12 flex items-center justify-center rounded-full bg-blue-500/10 mb-4 group-hover:scale-110 transition-transform">
-                  <Server size={24} className="text-blue-400" />
+                <div className="mx-auto w-12 h-12 flex items-center justify-center rounded-full bg-amber-500/10 mb-4 group-hover:scale-110 transition-transform">
+                  <Server size={24} className="text-amber-400" />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-2">Initial</h3>
                 <div className="text-4xl font-extrabold text-white mb-2">$19<span className="text-lg text-slate-500 font-medium">/mo</span></div>
                 <p className="text-slate-400 text-sm mb-6 flex-1">Standard detection and basic API access.</p>
-                <button className="w-full py-2.5 bg-slate-800 text-white font-medium rounded border border-slate-700 group-hover:bg-blue-600 group-hover:border-blue-500 transition-colors">Select</button>
+                <button className="w-full py-2.5 bg-slate-800 text-white font-medium rounded border border-slate-700 group-hover:bg-amber-600 group-hover:border-amber-500 transition-colors">Select</button>
               </div>
 
               {/* Intermediate Plan */}
               <div 
-                className="bg-slate-900 border-2 border-blue-500 rounded-xl p-6 text-center cursor-pointer relative shadow-[0_0_20px_rgba(37,99,235,0.15)] flex flex-col group transform md:-translate-y-2"
+                className="bg-slate-900 border-2 border-amber-500 rounded-xl p-6 text-center cursor-pointer relative shadow-[0_0_20px_rgba(37,99,235,0.15)] flex flex-col group transform md:-translate-y-2"
                 onClick={() => handleSelectPlan({name: 'Intermediate', price: '$49'})}
               >
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
                   Recommended
                 </div>
-                <div className="mx-auto w-12 h-12 flex items-center justify-center rounded-full bg-blue-500/20 mb-4 group-hover:scale-110 transition-transform">
-                  <Zap size={24} className="text-blue-400" />
+                <div className="mx-auto w-12 h-12 flex items-center justify-center rounded-full bg-amber-500/20 mb-4 group-hover:scale-110 transition-transform">
+                  <Zap size={24} className="text-amber-400" />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-2">Intermediate</h3>
                 <div className="text-4xl font-extrabold text-white mb-2">$49<span className="text-lg text-slate-500 font-medium">/mo</span></div>
                 <p className="text-slate-400 text-sm mb-6 flex-1">Advanced XAI Heatmaps & Analytics.</p>
-                <button className="w-full py-2.5 bg-blue-600 text-white font-medium rounded shadow-lg shadow-blue-500/25 group-hover:bg-blue-500 transition-colors">Select</button>
+                <button className="w-full py-2.5 bg-amber-600 text-white font-medium rounded shadow-lg shadow-amber-500/25 group-hover:bg-amber-500 transition-colors">Select</button>
               </div>
 
               {/* Pro Plan */}
@@ -152,7 +152,7 @@ function PaymentModal({ onClose, onRecharge }) {
               >
                 <ArrowLeft size={18} />
               </button>
-              <h2 className="text-2xl font-bold text-white tracking-tight"><span className="text-blue-500">{selectedPlan.name} Plan</span> Checkout</h2>
+              <h2 className="text-2xl font-bold text-white tracking-tight"><span className="text-amber-500">{selectedPlan.name} Plan</span> Checkout</h2>
               <p className="text-slate-400">Total due today: <strong className="text-white text-lg">{selectedPlan.price}</strong></p>
             </div>
 
@@ -163,7 +163,7 @@ function PaymentModal({ onClose, onRecharge }) {
                </p>
               
               <button 
-                className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-md shadow-lg shadow-blue-500/20 transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2" 
+                className="w-full py-3.5 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-md shadow-lg shadow-amber-500/20 transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2" 
                 onClick={handleCashfreePayment} 
                 disabled={isProcessing}
               >

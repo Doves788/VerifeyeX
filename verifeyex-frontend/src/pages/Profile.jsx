@@ -11,7 +11,7 @@ function Profile({ balance, history }) {
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold text-white tracking-tight">SaaS Account Dashboard</h1>
         <p className="text-lg text-slate-400">Manage your billing, credits, and active defense usage history.</p>
-        <div className="h-1 w-16 bg-blue-600 mx-auto rounded-full mt-4"></div>
+        <div className="h-1 w-16 bg-amber-600 mx-auto rounded-full mt-4"></div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -37,7 +37,7 @@ function Profile({ balance, history }) {
         {/* History Panel */}
         <div className="col-span-1 md:col-span-2 bg-slate-900 border border-slate-800 rounded-xl p-8 shadow-lg">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-blue-500/10 rounded-lg text-blue-400">
+            <div className="p-2 bg-amber-500/10 rounded-lg text-amber-400">
               <Activity size={20} />
             </div>
             <h3 className="text-xl font-bold text-white">Platform Usage History</h3>

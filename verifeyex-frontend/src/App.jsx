@@ -25,7 +25,7 @@ const ProtectedRoute = ({ children }) => {
             Please log in for full usage of the platform. You must authenticate your identity to access the Live Scanner and Voice Enrollment systems.
           </p>
           <SignInButton mode="modal">
-            <button className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-md transition-all duration-200 shadow-[0_0_15px_rgba(37,99,235,0.3)] active:scale-95">
+            <button className="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-medium rounded-md transition-all duration-200 shadow-[0_0_15px_rgba(37,99,235,0.3)] active:scale-95">
               Sign In to Continue
             </button>
           </SignInButton>

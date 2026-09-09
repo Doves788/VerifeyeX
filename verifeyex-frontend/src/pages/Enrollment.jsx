@@ -90,7 +90,7 @@ function Enrollment() {
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold text-white tracking-tight">Voice Biometric Enrollment</h1>
         <p className="text-lg text-slate-400">Register your acoustic identity in the Vector Database.</p>
-        <div className="h-1 w-16 bg-blue-600 mx-auto rounded-full mt-4"></div>
+        <div className="h-1 w-16 bg-amber-600 mx-auto rounded-full mt-4"></div>
       </div>
       
       <div className="flex justify-center">
@@ -100,7 +100,7 @@ function Enrollment() {
               {status === 'success' ? (
                 <UserCheck size={48} className="text-emerald-400" />
               ) : (
-                <Fingerprint size={48} className="text-blue-500" />
+                <Fingerprint size={48} className="text-amber-500" />
               )}
             </div>
           </div>
@@ -116,7 +116,7 @@ function Enrollment() {
               <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Target Username</label>
               <input 
                 type="text" 
-                className="w-full bg-slate-950 border border-slate-800 text-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all placeholder-slate-600" 
+                className="w-full bg-slate-950 border border-slate-800 text-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all placeholder-slate-600" 
                 placeholder="e.g. CEO_John_Doe" 
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -129,8 +129,8 @@ function Enrollment() {
                 ${isRecording 
                   ? 'bg-red-500/20 text-red-500 border border-red-500/50 animate-pulse cursor-not-allowed' 
                   : status === 'processing'
-                  ? 'bg-blue-600/50 text-white/70 border border-blue-600/50 cursor-not-allowed'
-                  : 'bg-blue-600 hover:bg-blue-500 text-white active:scale-[0.98] shadow-lg shadow-blue-500/20'
+                  ? 'bg-amber-600/50 text-white/70 border border-amber-600/50 cursor-not-allowed'
+                  : 'bg-amber-600 hover:bg-amber-500 text-white active:scale-[0.98] shadow-lg shadow-amber-500/20'
                 }`}
               onClick={startEnrollment}
               disabled={isRecording || status === 'processing'}
@@ -148,7 +148,7 @@ function Enrollment() {
               <div className={`p-4 rounded-md text-sm font-medium border text-center ${
                 status === 'error' ? 'bg-red-500/10 border-red-500/30 text-red-400' :
                 status === 'success' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' :
-                'bg-blue-500/10 border-blue-500/30 text-blue-400'
+                'bg-amber-500/10 border-amber-500/30 text-amber-400'
               }`}>
                 {message}
               </div>
