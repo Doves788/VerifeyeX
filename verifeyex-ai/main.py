@@ -115,47 +115,6 @@ def calculate_cosine_similarity(vec_a, vec_b):
     magnitude = math.sqrt(norm_a_sq) * math.sqrt(norm_b_sq)
     return dot_product / magnitude
 
-@app.post("/predict")
-async def predict_audio(file: UploadFile = File(...)):
-    # 1. Save incoming audio
-    temp_file = f"temp_{uuid.uuid4()}.wav"
-    with open(temp_file, "wb") as f:
-        f.write(await file.read())
-        
-    # 2. Process Audio (Feature Extraction)
-    try:
-        y, sr = librosa.load(temp_file, sr=16000)
-        # Extract 60 MFCC features
-        mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=60)
-        # O(N) aggregation across time frames
-        mfccs_mean = [float(sum(row)/len(row)) for row in mfccs]
-    finally:
-        os.remove(temp_file)
-        
-    # 3. Vector Database Matching (Active Defense)
-    best_match = "Unknown Threat"
-    highest_sim = 0.0
-    
-    # Load persistent DB
-    try:
-        with open("voice_db.json", "r") as f:
-            voice_vector_db = json.load(f)
-    except:
-        voice_vector_db = {}
-    
-    # Linear scan through the persistent JSON vector database
-    for identity, stored_vector in voice_vector_db.items():
-        # Using our custom O(N) mathematics implementation
-        sim = calculate_cosine_similarity(mfccs_mean, stored_vector)
-        if sim > highest_sim:
-            highest_sim = sim
-            best_match = identity
-            
-    # Thresholding logic
-    if highest_sim > 0.40:
-        return {"status": "success", "prediction": "Verified", "identity": best_match, "confidence": float(highest_sim)}
-    else:
-        return {"status": "success", "prediction": "Deepfake Detected", "identity": "Unrecognized", "confidence": float(1.0 - highest_sim)}
 
 @app.post("/enroll")
 async def enroll_voice(username: str = Form(...), audio: UploadFile = File(...)):
@@ -189,12 +148,17 @@ async def enroll_voice(username: str = Form(...), audio: UploadFile = File(...))
     finally:
         os.remove(temp_file)
 
+@app.post("/predict")
 @app.post("/predict_dict")
-async def predict_audio(audio: UploadFile = File(...)):
+async def predict_audio_dict(audio: UploadFile = File(None), file: UploadFile = File(None)):
+    target_file = audio if audio else file
+    if not target_file:
+        return {"prediction": "Error: No audio file provided", "ai_probability": 0, "is_silence": True}
+        
     temp_file = f"temp_dict_{uuid.uuid4()}.wav"
     try:
         with open(temp_file, "wb") as f:
-            f.write(await audio.read())
+            f.write(await target_file.read())
             
         y, sr = librosa.load(temp_file, sr=16000)
         
