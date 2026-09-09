@@ -191,15 +191,13 @@ async def enroll_voice(username: str = Form(...), audio: UploadFile = File(...))
 
 @app.post("/predict_dict")
 async def predict_audio(audio: UploadFile = File(...)):
+    temp_file = f"temp_dict_{uuid.uuid4()}.wav"
     try:
-        audio_bytes = await audio.read()
-        
-        y, sr = sf.read(io.BytesIO(audio_bytes))
-        
-        # If stereo, convert to mono
-        if len(y.shape) > 1:
-            y = y.mean(axis=1)
+        with open(temp_file, "wb") as f:
+            f.write(await audio.read())
             
+        y, sr = librosa.load(temp_file, sr=16000)
+        
         if len(y) == 0:
             return {"prediction": "Unknown (Empty Audio)", "ai_probability": 0, "is_silence": True}
 
@@ -276,6 +274,9 @@ async def predict_audio(audio: UploadFile = File(...)):
         import traceback
         traceback.print_exc()
         return {"error": str(e), "prediction": "Error", "is_silence": True}
+    finally:
+        if os.path.exists(temp_file):
+            os.remove(temp_file)
 
 @app.get("/")
 def health_check():
