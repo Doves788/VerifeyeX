@@ -37,8 +37,9 @@ io.on('connection', (socket) => {
 
       socket.emit('prediction_result', response.data);
     } catch (error) {
-      console.error('Error contacting AI backend:', error.message);
-      socket.emit('prediction_result', { error: 'Failed to analyze audio' });
+      const errorMessage = error.response ? `HTTP ${error.response.status}` : error.message;
+      console.error('Error contacting AI backend:', errorMessage);
+      socket.emit('prediction_result', { error: `Backend connection failed: ${errorMessage}` });
     }
   });
 
