@@ -2,9 +2,9 @@
 
 **Enterprise Active Defense against Generative AI Voice Spoofing**
 
-![Deployment Status](https://img.shields.io/badge/Deployed-Vercel%20%7C%20Render-success)
-![CS Fundamentals](https://img.shields.io/badge/CS_Fundamentals-O(N)_Math-blue)
-![Architecture](https://img.shields.io/badge/Architecture-3--Tier_Microservices-purple)
+![Deployment Status](https://img.shields.io/badge/Deployed-Vercel%20%7C%20Render-success?style=for-the-badge)
+![CS Fundamentals](https://img.shields.io/badge/CS_Fundamentals-O(N)_Math-blue?style=for-the-badge)
+![Architecture](https://img.shields.io/badge/Architecture-3--Tier_Microservices-purple?style=for-the-badge)
 
 ## 📌 The Problem: A Business Perspective
 Generative AI has made executive impersonation and wire fraud trivial. Current market solutions treat audio verification as an afterthought, relying on slow API polling and generic ML models that fail under real-world conditions.
@@ -26,18 +26,45 @@ Generative AI has made executive impersonation and wire fraud trivial. Current m
 
 ---
 
-## 🏗️ Architecture & CS Fundamentals
+## 🏗️ Architecture & Core Infrastructure
 
-Relying on black-box frameworks was actively avoided. Strong computer science fundamentals were non-negotiable for this project to ensure scalability, security, and accuracy.
+Relying on black-box frameworks was actively avoided. A custom 3-tier microservice architecture was designed from the ground up to ensure strict separation of concerns, scalability, and security.
 
 1. **The Client (React + Vite + Clerk)**
    - Secures routes dynamically. If a user is unauthenticated, the application intelligently renders a custom fallback UI rather than relying on buggy window redirects, creating a frictionless user experience.
 2. **The Real-Time Relay (Node.js + Socket.io)**
    - Acts as a high-speed traffic controller. It receives continuous binary audio blobs from the browser and pipes them to the Python engine, preventing the ML backend from being overwhelmed by direct client connections.
 3. **The ML Engine (Python + FastAPI + PyTorch)**
-   - **CS Fundamentals in Action:** Instead of blindly trusting 
-umpy.dot for vector comparison, the raw, O(N) Linear Algebra Cosine Similarity mathematical algorithms were implemented from scratch. This demonstrates a foundational understanding of the underlying mathematics.
-   - Extracts deep Mel-Frequency Cepstral Coefficients (MFCCs) using librosa to catch synthetic vocoder artifacts invisible to humans.
+   - Operates as an independent microservice dedicated solely to heavy tensor computations. It processes incoming audio buffers, extracts deep Mel-Frequency Cepstral Coefficients (MFCCs) using librosa, and maps the biometric vectors to catch synthetic vocoder artifacts invisible to humans.
+
+---
+
+## 🛠️ Tech Stack & Technologies
+
+### Frontend (Client Layer)
+- **React.js (Vite):** Lightning-fast UI rendering and component state management.
+- **Clerk:** Enterprise-grade OAuth 2.0 Identity & Access Management.
+- **RecordRTC:** Captures raw PCM audio streams directly from the user's browser via the Web Audio API.
+- **Lucide React & CSS Modules:** Glass-morphism UI with multi-colored mesh gradients for a premium SaaS feel.
+
+### Middleware (Real-Time Relay)
+- **Node.js & Express:** Lightweight, non-blocking asynchronous server runtime.
+- **Socket.io:** Maintains a persistent, full-duplex WebSocket connection to eliminate HTTP polling overhead during live audio streaming.
+
+### AI Engine (Backend Layer)
+- **Python 3 & FastAPI:** Chosen for extreme speed and native ASGI asynchronous support.
+- **PyTorch:** Simulates a custom ResNet neural network architecture for high-dimensional matrix classification.
+- **Librosa:** Advanced digital signal processing (DSP) for audio feature extraction.
+- **Cashfree Payments SDK:** Integrated Server-to-Server session generation to securely monetize and charge users for API usage.
+
+---
+
+## 🧠 Computer Science Fundamentals
+
+Strong computer science fundamentals were non-negotiable for this project to ensure true mechanical sympathy with the hardware.
+
+Instead of blindly trusting third-party libraries like 
+umpy.dot for vector comparison, the raw, O(N) Linear Algebra Cosine Similarity mathematical algorithms were implemented entirely from scratch. This demonstrates a foundational understanding of the underlying mathematics driving the artificial intelligence, proving an ability to optimize algorithms at the lowest level rather than just acting as an API wrapper.
 
 ---
 
@@ -58,6 +85,3 @@ The unedited AI pairing transcripts are available in the /ai-transcripts folder,
 - **Backend:** FastAPI PyTorch Engine (Render)
 
 *(Note: Ensure microphone permissions are granted in your browser to utilize the live Active Defense scanner).*
-
-
-
