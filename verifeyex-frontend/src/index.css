@@ -76,6 +76,8 @@ h2 {
   font-family: var(--heading);
   font-weight: 500;
   color: var(--text-h);
+}
+
 *, *::before, *::after {
   box-sizing: inherit;
 }
