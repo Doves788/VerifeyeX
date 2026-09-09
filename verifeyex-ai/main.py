@@ -226,7 +226,9 @@ async def predict_audio(audio: UploadFile = File(...)):
         # 4. Identity Layer (Vector Similarity Search)
         identified_user = "Unknown"
         max_sim = -1
-        live_embedding = np.mean(mfcc_norm, axis=1)
+        
+        # Calculate raw mean for identity matching (same as /enroll)
+        mfccs_mean = [float(sum(row)/len(row)) for row in mfcc]
         
         # Load persistent DB
         try:
@@ -236,11 +238,11 @@ async def predict_audio(audio: UploadFile = File(...)):
             persistent_db = {}
             
         for user, stored_emb_list in persistent_db.items():
-            stored_emb = np.array(stored_emb_list)
-            sim = cosine_similarity(live_embedding, stored_emb)
+            # Use the custom CS implementation
+            sim = calculate_cosine_similarity(mfccs_mean, stored_emb_list)
             if sim > max_sim:
                 max_sim = sim
-                if sim > 0.40:  # Lowered Threshold since MFCC means are phonetic-dependent
+                if sim > 0.40:  # Threshold
                     identified_user = user
         
         # 5. Autonomous Agent Swarm Payload
