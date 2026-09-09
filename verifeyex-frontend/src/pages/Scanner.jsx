@@ -4,7 +4,7 @@ import RecordRTC, { StereoAudioRecorder } from 'recordrtc';
 
 const SOCKET_URL = import.meta.env.VITE_RELAY_URL || 'http://localhost:3001';
 
-function Scanner({ onDeduct }) {
+function Scanner({ onDeduct, onRequestUpgrade }) {
   const [isRecording, setIsRecording] = useState(false);
   const [prediction, setPrediction] = useState(null);
   const [history, setHistory] = useState([]);
@@ -178,6 +178,7 @@ function Scanner({ onDeduct }) {
   const startRecording = async () => {
     // 1. DEDUCT BALANCE FOR SAAS TRIAL
     if (onDeduct && !onDeduct(25)) {
+      if (onRequestUpgrade) onRequestUpgrade();
       return; // Stop if not enough balance!
     }
 

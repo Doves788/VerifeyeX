@@ -40,7 +40,7 @@ function AppContent() {
   
   const [balance, setBalance] = useState(() => {
     const saved = localStorage.getItem('verifeyex_balance');
-    return saved !== null ? parseInt(saved, 10) : 100;
+    return saved !== null ? parseInt(saved, 10) : 300;
   });
 
   const [history, setHistory] = useState(() => {
@@ -66,7 +66,6 @@ function AppContent() {
       }]);
       return true;
     }
-    setShowPayment(true);
     return false;
   };
 
@@ -78,11 +77,11 @@ function AppContent() {
         {showPayment && (
           <PaymentModal 
             onClose={() => setShowPayment(false)} 
-            onRecharge={() => setBalance(1000)} 
+            onRecharge={() => setBalance(prev => prev + 1000)} 
           />
         )}
 
-        <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-8">
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
@@ -90,12 +89,12 @@ function AppContent() {
             
             {/* Protected Routes (Require Authentication) */}
             <Route path="/enroll" element={<ProtectedRoute><Enrollment /></ProtectedRoute>} />
-            <Route path="/scanner" element={<ProtectedRoute><Scanner onDeduct={handleDeduct} /></ProtectedRoute>} />
+            <Route path="/scanner" element={<ProtectedRoute><Scanner onDeduct={handleDeduct} onRequestUpgrade={() => setShowPayment(true)} /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile balance={balance} history={history} /></ProtectedRoute>} />
           </Routes>
         </main>
         <footer className="w-full text-center py-8 text-sm text-slate-500 border-t border-slate-800 bg-slate-950 mt-auto">
-          <p>VerifeyeX Security Systems &copy; {new Date().getFullYear()} | Autonomous Voice Threat Intelligence</p>
+          VerifeyeX Security Systems © 2026 | Autonomous Voice Threat Intelligence
         </footer>
       </div>
     </Router>
