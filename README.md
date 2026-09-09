@@ -28,7 +28,7 @@ Generative AI has made executive impersonation and wire fraud trivial. Current m
 
 ## 🏗️ Architecture & CS Fundamentals
 
-I don't believe in hiding behind black-box frameworks. Strong computer science fundamentals were non-negotiable for this project to ensure scalability, security, and accuracy.
+Relying on black-box frameworks was actively avoided. Strong computer science fundamentals were non-negotiable for this project to ensure scalability, security, and accuracy.
 
 1. **The Client (React + Vite + Clerk)**
    - Secures routes dynamically. If a user is unauthenticated, the application intelligently renders a custom fallback UI rather than relying on buggy window redirects, creating a frictionless user experience.
@@ -36,19 +36,19 @@ I don't believe in hiding behind black-box frameworks. Strong computer science f
    - Acts as a high-speed traffic controller. It receives continuous binary audio blobs from the browser and pipes them to the Python engine, preventing the ML backend from being overwhelmed by direct client connections.
 3. **The ML Engine (Python + FastAPI + PyTorch)**
    - **CS Fundamentals in Action:** Instead of blindly trusting 
-umpy.dot for vector comparison, I implemented the raw, O(N) Linear Algebra Cosine Similarity mathematical algorithms from scratch. This guarantees I understand the mathematics behind the AI.
+umpy.dot for vector comparison, the raw, O(N) Linear Algebra Cosine Similarity mathematical algorithms were implemented from scratch. This demonstrates a foundational understanding of the underlying mathematics.
    - Extracts deep Mel-Frequency Cepstral Coefficients (MFCCs) using librosa to catch synthetic vocoder artifacts invisible to humans.
 
 ---
 
-## 🤖 How I "Drove" AI to Build This
+## 🤖 AI-Accelerated Engineering
 
-I treated AI as a sounding board and a force multiplier, not a decision-maker. As the owner of the outcome, I maintained strict architectural command:
-- **Delegation & Framing:** I broke the 3-tier architecture into discrete components, feeding the AI specific context for the React frontend, the Node WebSocket, and the PyTorch backend independently.
-- **Detecting Bluffing:** When the AI confidently suggested using a generic API polling method for audio, I rejected it. I knew the latency would ruin the product. I enforced a WebSocket streaming architecture instead.
-- **Domain Expertise:** The AI generated the boilerplate, but I drove the business logic—integrating the Cashfree Payments SDK for SaaS monetization and architecting the Clerk Auth security layers.
+AI was leveraged as a sounding board and a force multiplier, rather than a decision-maker. Strict architectural command was maintained throughout the development lifecycle:
+- **Delegation & Framing:** The 3-tier architecture was broken down into discrete components. The AI was fed highly specific context for the React frontend, the Node WebSocket, and the PyTorch backend independently to prevent hallucination.
+- **Detecting Bluffing:** When the AI confidently suggested using a generic HTTP polling method for audio transfer, the approach was rejected. Recognizing that network latency would ruin the real-time product, a full-duplex WebSocket streaming architecture was enforced instead.
+- **Domain Expertise:** While AI generated the baseline boilerplate, human oversight drove the complex business logic—including integrating the Cashfree Payments SDK for SaaS monetization and architecting the Clerk Auth security layers.
 
-You can read the unedited AI pairing transcripts in the /ai-transcripts folder to see exactly how I corrected mistakes, questioned assumptions, and guided the agent to the final outcome.
+The unedited AI pairing transcripts are available in the /ai-transcripts folder, documenting the process of correcting mistakes, questioning assumptions, and guiding the agent to the final outcome.
 
 ---
 
@@ -58,3 +58,6 @@ You can read the unedited AI pairing transcripts in the /ai-transcripts folder t
 - **Backend:** FastAPI PyTorch Engine (Render)
 
 *(Note: Ensure microphone permissions are granted in your browser to utilize the live Active Defense scanner).*
+
+
+
