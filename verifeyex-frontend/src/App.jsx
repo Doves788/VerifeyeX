@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ClerkProvider, SignedIn, SignedOut, SignIn, RedirectToSignIn } from '@clerk/clerk-react';
+import { ClerkProvider, SignedIn, SignedOut, SignInButton } from '@clerk/clerk-react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Scanner from './pages/Scanner';
@@ -19,7 +19,15 @@ const ProtectedRoute = ({ children }) => {
         {children}
       </SignedIn>
       <SignedOut>
-        <RedirectToSignIn />
+        <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem', textAlign: 'center', maxWidth: '600px', margin: '4rem auto' }}>
+          <h2 style={{ marginBottom: '1rem', fontSize: '2rem' }}>Authentication Required</h2>
+          <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', fontSize: '1.1rem', lineHeight: '1.6' }}>
+            Please log in for full usage of the platform. You must authenticate your identity to access the Live Scanner and Voice Enrollment systems.
+          </p>
+          <SignInButton mode="modal">
+            <button className="btn-primary-large" style={{ cursor: 'pointer' }}>Sign In to Continue</button>
+          </SignInButton>
+        </div>
       </SignedOut>
     </>
   );
