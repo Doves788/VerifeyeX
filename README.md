@@ -1,4 +1,4 @@
-﻿# VerifeyeX 🛡️
+# VerifeyeX 🛡️
 
 **Enterprise Active Defense against Generative AI Voice Spoofing**
 
@@ -13,15 +13,15 @@ Generative AI has made executive impersonation and wire fraud trivial. Current m
 
 ---
 
-## 📸 Platform Gallery
+## 🎨 Platform Gallery
 
 <div align="center">
-  <img src="assets/screenshots/home.png" alt="Home Page" width="49%">
-  <img src="assets/screenshots/enrollment.png" alt="Voice Biometric Enrollment" width="49%">
+  <img src="assets/screenshots/home_amber.png" alt="Home Dashboard" width="49%">
+  <img src="assets/screenshots/enroll_amber.png" alt="Voice Biometric Enrollment" width="49%">
 </div>
 <div align="center">
-  <img src="assets/screenshots/pricing.png" alt="SaaS Pricing Plans" width="49%">
-  <img src="assets/screenshots/checkout.png" alt="Cashfree Secure Checkout" width="49%">
+  <img src="assets/screenshots/scanner_amber.png" alt="Live Scanner Terminal" width="49%">
+  <img src="assets/screenshots/tech_amber.png" alt="Platform Architecture" width="49%">
 </div>
 
 ---
