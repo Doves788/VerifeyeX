@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import RecordRTC, { StereoAudioRecorder } from 'recordrtc';
-import '../App.css';
 
 const SOCKET_URL = import.meta.env.VITE_RELAY_URL || 'http://localhost:3001';
 
@@ -233,66 +232,68 @@ function Scanner({ onDeduct }) {
   };
 
   return (
-    <div className="page-wrapper fade-in">
-      <div className="page-header">
-        <h1>Live Audio Intelligence</h1>
-        <p>Stream microphone data via WebSockets for real-time inference.</p>
+    <div className="w-full max-w-6xl mx-auto space-y-12">
+      <div className="text-center space-y-4">
+        <h1 className="text-4xl font-bold text-white tracking-tight">Live Audio Intelligence</h1>
+        <p className="text-lg text-slate-400">Stream microphone data via WebSockets for real-time inference.</p>
+        <div className="h-1 w-16 bg-blue-600 mx-auto rounded-full mt-4"></div>
       </div>
 
-      <main className="main-content">
-        <section className="scanner-section">
-          <div className="scanner-card glass-panel">
-            <div className="card-header">
-              <h2>Scanner Terminal</h2>
-              <div className={`status-badge ${isRecording ? 'active' : 'idle'}`}>
-                {isRecording ? '● Live Recording' : 'System Idle'}
+      <main className="w-full">
+        <section className="w-full">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-8 shadow-xl">
+            <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-800">
+              <h2 className="text-2xl font-bold text-white">Scanner Terminal</h2>
+              <div className={`px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase flex items-center gap-2 ${isRecording ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-slate-800 text-slate-400 border border-slate-700'}`}>
+                {isRecording ? <><span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> Live Recording</> : 'System Idle'}
               </div>
             </div>
 
-            <div className="visualizer-container">
-               <canvas ref={canvasRef} width="600" height="120" className="visualizer" />
+            <div className="w-full bg-slate-950 border border-slate-800 rounded-lg p-4 mb-8">
+               <canvas ref={canvasRef} width="600" height="120" className="w-full h-[120px] rounded" />
             </div>
 
-            <div className="controls">
+            <div className="flex justify-center mb-10">
               {!isRecording ? (
-                <button className="btn start-btn" onClick={startRecording}>
+                <button className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-md shadow-lg shadow-blue-500/20 transition-all duration-200 active:scale-95" onClick={startRecording}>
                   Initialize Scanner
                 </button>
               ) : (
-                <button className="btn stop-btn" onClick={stopRecording}>
+                <button className="px-8 py-3 bg-red-600 hover:bg-red-500 text-white font-semibold rounded-md shadow-lg shadow-red-500/20 transition-all duration-200 active:scale-95" onClick={stopRecording}>
                   Terminate Connection
                 </button>
               )}
             </div>
 
-            <div className="results-grid">
-              <div className="results-panel">
-                <h3 className="section-title">Network Output</h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Network Output */}
+              <div className="bg-slate-950/50 border border-slate-800 rounded-lg p-6">
+                <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Network Output</h3>
                 {prediction ? (
                   prediction.is_silence ? (
-                    <div className="prediction-alert safe">
-                      <div className="pred-icon">💤</div>
-                      <div className="pred-details">
-                        <div className="pred-title">Silence Detected</div>
-                        <div className="pred-conf">Skipping AI inference to save compute.</div>
+                    <div className="flex items-start gap-4 p-4 rounded-lg bg-slate-800/50 border border-slate-700">
+                      <div className="text-2xl">💤</div>
+                      <div>
+                        <div className="text-white font-bold text-lg mb-1">Silence Detected</div>
+                        <div className="text-slate-400 text-sm">Skipping AI inference to save compute.</div>
                       </div>
                     </div>
                   ) : (
-                    <div className={`prediction-alert ${prediction.prediction === 'AI Deepfake' ? 'danger' : 'safe'}`}>
-                      <div className="pred-icon">
-                        {prediction.prediction === 'AI Deepfake' ? '⚠️' : '✅'}
+                    <div className={`flex items-start gap-4 p-4 rounded-lg border ${prediction.prediction === 'AI Deepfake' ? 'bg-red-500/10 border-red-500/30' : 'bg-emerald-500/10 border-emerald-500/30'}`}>
+                      <div className="text-2xl mt-1">
+                        {prediction.prediction === 'AI Deepfake' ? '🚨' : '✅'}
                       </div>
-                      <div className="pred-details">
-                        <div className="pred-title">{prediction.prediction}</div>
+                      <div>
+                        <div className={`font-bold text-xl mb-1 ${prediction.prediction === 'AI Deepfake' ? 'text-red-400' : 'text-emerald-400'}`}>{prediction.prediction}</div>
                         {prediction.confidence && (
-                          <div className="pred-conf">Network Confidence: {(prediction.confidence * 100).toFixed(1)}%</div>
+                          <div className="text-slate-300 text-sm mb-2">Network Confidence: {(prediction.confidence * 100).toFixed(1)}%</div>
                         )}
                         {prediction.identity && prediction.identity !== 'Unknown' ? (
-                          <div className="pred-identity" style={{color: '#10b981', marginTop: '4px', fontSize: '0.9rem', fontWeight: 'bold'}}>
+                          <div className="text-emerald-400 font-bold text-sm bg-emerald-500/10 px-2 py-1 rounded inline-block">
                             👤 Verified Identity: {prediction.identity} ({(prediction.identity_confidence * 100).toFixed(0)}% Match)
                           </div>
                         ) : prediction.prediction !== 'AI Deepfake' && (
-                          <div className="pred-identity" style={{color: '#94a3b8', marginTop: '4px', fontSize: '0.9rem'}}>
+                          <div className="text-slate-400 text-sm bg-slate-800 px-2 py-1 rounded inline-block">
                             👤 Identity: Unknown Caller
                           </div>
                         )}
@@ -300,58 +301,61 @@ function Scanner({ onDeduct }) {
                     </div>
                   )
                 ) : (
-                  <div className="waiting-placeholder">
+                  <div className="flex items-center justify-center h-32 border border-dashed border-slate-700 rounded-lg bg-slate-900/50">
                     {isRecording ? (
-                      <div className="loading-pulse">Analyzing MFCCs against ResNet database...</div>
+                      <div className="text-blue-400 animate-pulse text-sm font-medium">Analyzing MFCCs against ResNet database...</div>
                     ) : (
-                      "Awaiting audio input stream."
+                      <span className="text-slate-500 text-sm">Awaiting audio input stream.</span>
                     )}
                   </div>
                 )}
               </div>
 
               {/* XAI Heatmap Display */}
-              <div className="xai-panel">
-                <h3 className="section-title">Acoustic Fingerprint (XAI)</h3>
-                <div className="heatmap-container">
-                  <canvas ref={heatmapCanvasRef} width="300" height="100" className="heatmap-canvas" />
+              <div className="bg-slate-950/50 border border-slate-800 rounded-lg p-6">
+                <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Acoustic Fingerprint (XAI)</h3>
+                <div className="w-full bg-slate-900 border border-slate-800 rounded overflow-hidden mb-2">
+                  <canvas ref={heatmapCanvasRef} width="300" height="100" className="w-full h-auto block" />
                 </div>
-                <p className="xai-caption">Normalized MFCC matrix fed to the ResNet</p>
+                <p className="text-xs text-slate-500 text-center">Normalized MFCC matrix fed to the ResNet</p>
               </div>
             </div>
 
             {/* Active Threat Investigation Dashboard */}
             {prediction && prediction.investigation && (
-              <div className="investigation-dashboard glass-panel">
-                <div className="dashboard-header">
-                  <h3>🚨 Autonomous Threat Investigation Swarm</h3>
-                  <div className="pulse-indicator">Active</div>
+              <div className="mt-8 bg-purple-900/10 border border-purple-500/30 rounded-lg overflow-hidden">
+                <div className="bg-purple-900/40 px-6 py-3 border-b border-purple-500/30 flex items-center justify-between">
+                  <h3 className="text-purple-300 font-bold text-sm uppercase tracking-wider flex items-center gap-2">
+                    <span>⚡</span> Autonomous Threat Investigation Swarm
+                  </h3>
+                  <div className="text-xs text-purple-400 bg-purple-500/20 px-2 py-1 rounded-full animate-pulse border border-purple-500/50">Active</div>
                 </div>
-                <div className="agent-logs">
-                  <div className="agent-log">
-                    <span className="agent-name">Transcriber Agent:</span> 
-                    <span className="agent-msg">{prediction.investigation.transcription}</span>
+                <div className="p-6 space-y-3 font-mono text-sm">
+                  <div className="flex flex-col sm:flex-row gap-2 pb-3 border-b border-purple-900/30">
+                    <span className="text-purple-400 font-bold min-w-[150px]">Transcriber Agent:</span> 
+                    <span className="text-slate-300">{prediction.investigation.transcription}</span>
                   </div>
-                  <div className="agent-log">
-                    <span className="agent-name">Fusion Profiler:</span> 
-                    <span className="agent-msg">{prediction.investigation.profiler}</span>
+                  <div className="flex flex-col sm:flex-row gap-2 pb-3 border-b border-purple-900/30">
+                    <span className="text-purple-400 font-bold min-w-[150px]">Fusion Profiler:</span> 
+                    <span className="text-slate-300">{prediction.investigation.profiler}</span>
                   </div>
-                  <div className="agent-log action-log">
-                    <span className="agent-name">Active Responder:</span> 
-                    <span className="agent-msg">{prediction.investigation.action}</span>
+                  <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                    <span className="text-red-400 font-bold min-w-[150px]">Active Responder:</span> 
+                    <span className="text-red-300 font-bold">{prediction.investigation.action}</span>
                   </div>
                 </div>
               </div>
             )}
             
+            {/* Timeline */}
             {history.length > 0 && (
-              <div className="history-panel">
-                <h4 className="section-title">Timeline History (Last 10s)</h4>
-                <div className="timeline">
+              <div className="mt-8 pt-6 border-t border-slate-800">
+                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Timeline History (Last 10s)</h4>
+                <div className="flex items-center gap-2">
                   {history.map((h, i) => (
                     <div 
                       key={i} 
-                      className={`timeline-dot ${h.prediction === 'AI Deepfake' ? 'danger-dot' : 'safe-dot'}`} 
+                      className={`w-3 h-3 rounded-full ${h.prediction === 'AI Deepfake' ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]' : 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]'}`} 
                       title={`${h.prediction} (${(h.confidence*100).toFixed(1)}%)`}
                     ></div>
                   ))}

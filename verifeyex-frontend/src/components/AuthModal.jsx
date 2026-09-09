@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Shield, Mail, Lock, Fingerprint } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
-import './AuthModal.css';
 
 function AuthModal({ onLogin }) {
   const [email, setEmail] = useState('');

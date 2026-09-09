@@ -1,7 +1,6 @@
-import { useState, useRef } from 'react';
+﻿import { useState, useRef } from 'react';
 import RecordRTC, { StereoAudioRecorder } from 'recordrtc';
 import { Fingerprint, UserCheck, Loader } from 'lucide-react';
-import './Enrollment.css';
 
 function Enrollment() {
   const [username, setUsername] = useState('');
@@ -66,7 +65,7 @@ function Enrollment() {
     formData.append('audio', blob, 'enroll.wav');
     
     try {
-      const response = await fetch('http://localhost:8000/enroll', {
+      const response = await fetch('`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/enroll`', {
         method: 'POST',
         body: formData,
       });
@@ -87,46 +86,74 @@ function Enrollment() {
   };
 
   return (
-    <div className="page-wrapper fade-in">
-      <div className="page-header">
-        <h1>Voice Biometric Enrollment</h1>
-        <p>Register your acoustic identity in the Vector Database.</p>
+    <div className="w-full max-w-4xl mx-auto space-y-12">
+      <div className="text-center space-y-4">
+        <h1 className="text-4xl font-bold text-white tracking-tight">Voice Biometric Enrollment</h1>
+        <p className="text-lg text-slate-400">Register your acoustic identity in the Vector Database.</p>
+        <div className="h-1 w-16 bg-blue-600 mx-auto rounded-full mt-4"></div>
       </div>
       
-      <div className="enrollment-container">
-        <div className="enrollment-card glass-panel">
-          <div className="enroll-icon">
-            {status === 'success' ? <UserCheck size={48} className="text-success" /> : <Fingerprint size={48} className="text-blue" />}
+      <div className="flex justify-center">
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-10 w-full max-w-lg shadow-xl">
+          <div className="flex justify-center mb-8">
+            <div className="p-4 bg-slate-800/50 rounded-full border border-slate-700/50">
+              {status === 'success' ? (
+                <UserCheck size={48} className="text-emerald-400" />
+              ) : (
+                <Fingerprint size={48} className="text-blue-500" />
+              )}
+            </div>
           </div>
           
-          <h2>Identity Registration</h2>
-          <p className="enroll-desc">
+          <h2 className="text-2xl font-bold text-white text-center mb-4">Identity Registration</h2>
+          <p className="text-slate-400 text-center mb-8 text-sm leading-relaxed">
             To enable Active Defense, we need to map your voice. 
-            Enter your ID and read the phrase: <strong>"My voice is my password, verify my identity."</strong>
+            Enter your ID and read the phrase: <br/><strong className="text-slate-200 mt-2 block">"My voice is my password, verify my identity."</strong>
           </p>
           
-          <input 
-            type="text" 
-            className="enroll-input" 
-            placeholder="e.g. CEO_John_Doe" 
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            disabled={status === 'recording' || status === 'processing'}
-          />
-          
-          <button 
-            className={`btn-enroll ${isRecording ? 'recording' : ''}`}
-            onClick={startEnrollment}
-            disabled={isRecording || status === 'processing'}
-          >
-            {isRecording ? '● Recording...' : status === 'processing' ? <Loader className="spin" size={20} /> : 'Begin Voice Capture'}
-          </button>
-          
-          {message && (
-            <div className={`enroll-message status-${status}`}>
-              {message}
+          <div className="space-y-6">
+            <div>
+              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Target Username</label>
+              <input 
+                type="text" 
+                className="w-full bg-slate-950 border border-slate-800 text-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all placeholder-slate-600" 
+                placeholder="e.g. CEO_John_Doe" 
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                disabled={status === 'recording' || status === 'processing'}
+              />
             </div>
-          )}
+            
+            <button 
+              className={`w-full flex items-center justify-center gap-2 px-6 py-3.5 font-medium rounded-md transition-all duration-200 
+                ${isRecording 
+                  ? 'bg-red-500/20 text-red-500 border border-red-500/50 animate-pulse cursor-not-allowed' 
+                  : status === 'processing'
+                  ? 'bg-blue-600/50 text-white/70 border border-blue-600/50 cursor-not-allowed'
+                  : 'bg-blue-600 hover:bg-blue-500 text-white active:scale-[0.98] shadow-lg shadow-blue-500/20'
+                }`}
+              onClick={startEnrollment}
+              disabled={isRecording || status === 'processing'}
+            >
+              {isRecording ? (
+                <>ðŸ”´ Recording (5s)...</>
+              ) : status === 'processing' ? (
+                <><Loader className="animate-spin" size={20} /> Processing Audio...</>
+              ) : (
+                'Begin Voice Capture'
+              )}
+            </button>
+            
+            {message && (
+              <div className={`p-4 rounded-md text-sm font-medium border text-center ${
+                status === 'error' ? 'bg-red-500/10 border-red-500/30 text-red-400' :
+                status === 'success' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' :
+                'bg-blue-500/10 border-blue-500/30 text-blue-400'
+              }`}>
+                {message}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -134,4 +161,5 @@ function Enrollment() {
 }
 
 export default Enrollment;
+
 
